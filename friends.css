@@ -5,6 +5,7 @@ body {
   overflow-x: hidden;
 }
 
+/* Background Elements */
 .background-grid {
   position: fixed;
   top: 0;
@@ -270,4 +271,3 @@ body {
     padding-top: 4rem;
   }
 }
-

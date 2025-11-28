@@ -5,7 +5,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Background Elements */
 .background-grid {
   position: fixed;
   top: 0;
@@ -187,6 +186,19 @@ body {
   font-weight: 700;
   margin: 0;
   color: #fff;
+}
+
+.friend-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.friend-note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  font-style: italic;
 }
 
 .add-friend {

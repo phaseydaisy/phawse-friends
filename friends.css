@@ -179,7 +179,6 @@ body::-webkit-scrollbar {
 .friend-card.crimson:hover {
   border-color: rgba(220, 20, 60, 0.55);
   box-shadow: 0 12px 40px rgba(220, 20, 60, 0.25), 0 0 60px rgba(255, 192, 217, 0.15);
-  background: rgba(220, 20, 60, 0.10);
 }
 
 .friend-card.purple:hover {
@@ -206,7 +205,6 @@ body::-webkit-scrollbar {
 .friend-card.black:hover {
   border-color: rgba(80, 80, 80, 0.55);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(40, 40, 40, 0.25);
-  background: rgba(0, 0, 0, 0.12);
 }
 
 .friend-card.white .friend-avatar {

@@ -200,6 +200,13 @@ body::-webkit-scrollbar {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.friend-card.white .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.friend-card.white:hover .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
 .friends-grid .full-row {
   grid-column: 1 / -1;
   justify-self: center;

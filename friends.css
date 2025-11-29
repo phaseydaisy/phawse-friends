@@ -202,9 +202,13 @@ body::-webkit-scrollbar {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.friend-card.black {
+  border-color: rgba(40, 40, 40, 0.5);
+}
+
 .friend-card.black:hover {
-  border-color: rgba(80, 80, 80, 0.55);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(40, 40, 40, 0.25);
+  border-color: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(20, 20, 20, 0.35);
 }
 
 .friend-card.white .friend-avatar {

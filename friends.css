@@ -203,8 +203,12 @@ body::-webkit-scrollbar {
 }
 
 .friend-card.black:hover {
-  border-color: rgba(0, 0, 0, 0.85);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(20, 20, 20, 0.35);
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 10px 24px rgba(255, 255, 255, 0.22),
+    0 0 36px rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .friend-card.white .friend-avatar {
@@ -212,6 +216,10 @@ body::-webkit-scrollbar {
 }
 .friend-card.white:hover .friend-avatar {
   border-color: rgba(255, 255, 255, 0.9);
+}
+
+.friend-card.black .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .friends-grid .full-row {
@@ -259,11 +267,11 @@ body::-webkit-scrollbar {
 }
 
 .friend-card.black .friend-avatar {
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.28);
 }
 .friend-card.black:hover .friend-avatar {
-  border-color: rgba(60, 60, 60, 0.8);
-  box-shadow: 0 0 24px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.38);
 }
 
 .friend-avatar img {

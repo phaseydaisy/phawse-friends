@@ -203,6 +203,15 @@ body::-webkit-scrollbar {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.friend-card.black:hover {
+  border-color: rgba(0, 0, 0, 0.75);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.4),
+    0 0 36px rgba(50, 50, 50, 0.3),
+    0 0 0 1px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.15);
+}
+
 .friend-card.white .friend-avatar {
   border-color: rgba(255, 255, 255, 0.6);
 }
@@ -252,6 +261,15 @@ body::-webkit-scrollbar {
 }
 .friend-card.white:hover .friend-avatar {
   box-shadow: 0 0 22px rgba(255, 255, 255, 0.38);
+}
+
+.friend-card.black .friend-avatar {
+  border-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+}
+.friend-card.black:hover .friend-avatar {
+  border-color: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.5);
 }
 
 .friend-avatar img {

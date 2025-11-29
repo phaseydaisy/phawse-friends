@@ -3,6 +3,18 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+
+  -ms-overflow-style: none;
+}
+
+html, body {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .background-grid {
@@ -158,7 +170,6 @@ body {
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* Hover tints only (base card unchanged) */
 .friend-card.pink:hover {
   border-color: rgba(255, 192, 217, 0.55);
   box-shadow: 0 12px 40px rgba(255, 192, 217, 0.25), 0 0 60px rgba(215, 201, 255, 0.18);
@@ -181,6 +192,18 @@ body {
   border-color: rgba(74, 222, 128, 0.55);
   box-shadow: 0 12px 40px rgba(74, 222, 128, 0.25), 0 0 60px rgba(134, 239, 172, 0.15);
   background: rgba(74, 222, 128, 0.10);
+}
+
+.friend-card.white:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 40px rgba(255, 255, 255, 0.18), 0 0 60px rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.friends-grid .full-row {
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 280px;
 }
 
 .friend-avatar {

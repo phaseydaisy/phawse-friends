@@ -378,6 +378,14 @@ body::-webkit-scrollbar {
   margin: 0;
 }
 
+.friends-note + .friends-note {
+  margin-top: 1.5rem;
+}
+
+.friends-note + .friends-grid {
+  margin-top: 1rem;
+}
+
 @media (max-width: 768px) {
   .friends-title {
     font-size: 2rem;

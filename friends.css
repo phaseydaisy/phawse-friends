@@ -1,10 +1,23 @@
 body {
-  background: #0b0f14;
+  background: #0a0a0f;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-
   -ms-overflow-style: none;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3), transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(138, 201, 255, 0.25), transparent 50%);
+  z-index: -1;
 }
 
 html, body {
@@ -24,61 +37,123 @@ body::-webkit-scrollbar {
   width: 100%;
   height: 100%;
   background-image: 
-    linear-gradient(rgba(255, 192, 217, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(215, 201, 255, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
+    linear-gradient(rgba(138, 201, 255, 0.05) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(138, 201, 255, 0.05) 2px, transparent 2px),
+    linear-gradient(rgba(138, 201, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138, 201, 255, 0.02) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
   z-index: 0;
   pointer-events: none;
+  animation: gridScroll 20s linear infinite;
+}
+
+@keyframes gridScroll {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(100px, 100px); }
 }
 
 .gradient-orb {
   position: fixed;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.15;
+  filter: blur(120px);
+  opacity: 0.4;
   pointer-events: none;
   z-index: 0;
-  animation: float 20s ease-in-out infinite;
+  mix-blend-mode: screen;
 }
 
 .orb-1 {
-  width: 500px;
-  height: 500px;
-  background: linear-gradient(135deg, #ffc0d9, #d7c9ff);
-  top: -10%;
-  right: -10%;
-  animation-delay: 0s;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #ff6ec4 0%, #7873f5 50%, transparent 70%);
+  animation: morphOrb1 15s ease-in-out infinite;
 }
 
 .orb-2 {
-  width: 400px;
-  height: 400px;
-  background: linear-gradient(135deg, #a0e7e5, #ffc0d9);
-  bottom: -10%;
-  left: -10%;
-  animation-delay: 7s;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #8ac9ff 0%, #c780fa 50%, transparent 70%);
+  animation: morphOrb2 18s ease-in-out infinite;
 }
 
 .orb-3 {
-  width: 300px;
-  height: 300px;
-  background: linear-gradient(135deg, #d7c9ff, #ffc0d9);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation-delay: 14s;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, #ffd27d 0%, #ff9a76 50%, transparent 70%);
+  animation: morphOrb3 20s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
+@keyframes morphOrb1 {
+  0%, 100% { 
+    transform: translate(-10%, -10%) rotate(0deg) scale(1);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
   }
-  33% {
-    transform: translate(30px, -30px) scale(1.1);
+  33% { 
+    transform: translate(5%, 15%) rotate(120deg) scale(1.1);
+    border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
   }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
+  66% { 
+    transform: translate(-5%, 5%) rotate(240deg) scale(0.9);
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
   }
+}
+
+@keyframes morphOrb2 {
+  0%, 100% { 
+    transform: translate(10%, 10%) rotate(0deg) scale(1);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  33% { 
+    transform: translate(-15%, -5%) rotate(120deg) scale(1.15);
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  66% { 
+    transform: translate(10%, -10%) rotate(240deg) scale(0.95);
+    border-radius: 70% 30% 40% 60% / 40% 50% 60% 50%;
+  }
+}
+
+@keyframes morphOrb3 {
+  0%, 100% { 
+    transform: translate(0%, 15%) rotate(0deg) scale(1);
+    border-radius: 50% 50% 30% 70% / 30% 70% 70% 30%;
+  }
+  33% { 
+    transform: translate(-10%, -10%) rotate(135deg) scale(1.2);
+    border-radius: 40% 60% 60% 40% / 70% 30% 30% 70%;
+  }
+  66% { 
+    transform: translate(15%, 0%) rotate(270deg) scale(0.85);
+    border-radius: 60% 40% 50% 50% / 50% 50% 40% 60%;
+  }
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 60% 70%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 80% 10%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 90% 60%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 33% 80%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 15% 60%, rgba(255, 255, 255, 0.3), transparent);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: floatParticles 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+@keyframes floatParticles {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
 }
 
 .back-button {

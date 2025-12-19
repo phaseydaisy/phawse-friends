@@ -543,9 +543,8 @@ body.entrance-done .friends-container {
 /* allow user to skip by clicking overlay */
 .enter-overlay:active { cursor: pointer; }
 
-/* Panel that appears below the clicked card */
 .friend-note-box {
-  grid-column: 1 / -1; /* span full row so it pushes down content reliably */
+  grid-column: 1 / -1;
   overflow: hidden;
   max-height: 0;
   opacity: 0;
@@ -557,12 +556,10 @@ body.entrance-done .friends-container {
   box-shadow: 0 8px 30px rgba(0,0,0,0.35);
 }
 
-/* inner padding/content area */
 .friend-note-inner {
   padding: 1rem 1.25rem;
 }
 
-/* header inside the note (friend name + optional label) */
 .friend-note-inner .note-header {
   margin: 0 0 0.5rem 0;
   font-family: 'Urbanist', sans-serif;
@@ -571,12 +568,9 @@ body.entrance-done .friends-container {
   font-size: 1rem;
 }
 
-/* content area for quotes/notes (empty for now) */
 .friend-note-inner .note-quotes {
   color: rgba(255,255,255,0.65);
   font-style: italic;
-  min-height: 2.2rem; /* reasonable space for empty placeholder */
+  min-height: 2.2rem;
 }
 
-/* when JS expands the panel we set max-height inline to content height
-   so CSS handles smooth transition; no extra class needed */

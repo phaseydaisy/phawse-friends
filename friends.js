@@ -83,45 +83,49 @@
 		return box;
 	}
 
-	function updateOpenNoteContentFor(card) {
-		if (!openCard || openCard !== card || !openBox) return;
-		const quotes = openBox.querySelector('.note-quotes');
-		if (quotes) quotes.innerHTML = renderNotesText(getNotesFromCard(card));
-	}
-
-	window.setNote = function (id, text) {
-		if (!id) return;
-		const img = document.querySelector(`img[data-discord-id="${id}"]`);
-		if (!img) return;
-		const card = img.closest('.friend-card');
-		if (!card) return;
-		const src = card.querySelector('.friend-notes-source');
-		if (src) src.textContent = text || '';
-		card.dataset.notes = text || '';
-		updateOpenNoteContentFor(card);
-	};
-
-	window.clearNote = function (id) {
-		window.setNote(id, '');
-	};
-
 	function openNoteUnder(card) {
 		if (openCard && openCard !== card) closeNote();
-		const box = createNoteBox(card);
-		card.appendChild(box);
 
+		// create panel and insert after the card (flow, pushes content down)
+		const box = createNoteBox(card);
+		card.parentNode.insertBefore(box, card.nextSibling);
+
+		// start collapsed
+		box.style.maxHeight = '0px';
+		box.style.opacity = '0';
+		// force reflow
 		void box.offsetHeight;
-		requestAnimationFrame(() => box.classList.add('open'));
+
+		// measure content and expand
+		const inner = box.querySelector('.friend-note-inner');
+		const target = inner ? inner.scrollHeight + 8 : 120;
+		box.style.transition = 'max-height 320ms ease, opacity 220ms ease';
+		requestAnimationFrame(() => {
+			box.style.maxHeight = target + 'px';
+			box.style.opacity = '1';
+			box.classList.add('open');
+		});
+
+		// after open transition completes, remove max-height so content can size naturally
+		const onOpenEnd = (e) => {
+			if (e.propertyName === 'max-height') {
+				box.style.maxHeight = 'none';
+				box.removeEventListener('transitionend', onOpenEnd);
+			}
+		};
+		box.addEventListener('transitionend', onOpenEnd);
 
 		card.classList.add('active');
 		card.setAttribute('aria-expanded', 'true');
 		openBox = box;
 		openCard = card;
+
 		outsideClickHandler = (e) => {
 			if (!openCard) return;
-			if (!openCard.contains(e.target)) closeNote();
+			if (!openCard.contains(e.target) && !openBox.contains(e.target)) closeNote();
 		};
 		document.addEventListener('click', outsideClickHandler);
+
 		escHandler = (e) => { if (e.key === 'Escape') closeNote(); };
 		document.addEventListener('keydown', escHandler);
 	}
@@ -130,20 +134,35 @@
 		if (!openBox || !openCard) return;
 		const box = openBox;
 		const card = openCard;
-		box.classList.remove('open');
+
+		// set a fixed height to animate from current size to 0
+		const current = box.getBoundingClientRect().height;
+		box.style.maxHeight = current + 'px';
+		// force reflow then collapse
+		void box.offsetHeight;
+		requestAnimationFrame(() => {
+			box.style.maxHeight = '0px';
+			box.style.opacity = '0';
+			box.classList.remove('open');
+		});
+
 		card.classList.remove('active');
 		card.setAttribute('aria-expanded', 'false');
+
 		const cleanup = (e) => {
-			if (!e || e.propertyName === 'opacity') {
+			// wait for max-height/opacity transition end
+			if (!e || e.propertyName === 'max-height') {
 				if (box.parentNode) box.parentNode.removeChild(box);
 				openBox = null;
 				openCard = null;
 				document.removeEventListener('click', outsideClickHandler);
 				document.removeEventListener('keydown', escHandler);
+				box.removeEventListener('transitionend', cleanup);
 			}
 		};
 		box.addEventListener('transitionend', cleanup);
-		setTimeout(cleanup, 420);
+		// fallback cleanup
+		setTimeout(() => cleanup(), 420);
 	}
 
 	function onAvatarClick(e) {

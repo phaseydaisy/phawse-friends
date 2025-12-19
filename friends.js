@@ -2,14 +2,27 @@
 	'use strict';
 
 	function runEntrance() {
-		const SHOW_MS = 120;
-		setTimeout(() => document.body.classList.add('entrance-done'), SHOW_MS);
+		const KEY = 'phawse:entrance-start';
+		const TOTAL = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--phawse-entrance-total') || '1500', 10);
+		const now = Date.now();
+		const stored = parseInt(localStorage.getItem(KEY), 10);
+		if (!stored || isNaN(stored)) {
+			localStorage.setItem(KEY, String(now));
+			setTimeout(() => document.body.classList.add('entrance-done'), TOTAL);
+			return;
+		}
+		const elapsed = now - stored;
+		if (elapsed >= TOTAL) {
+			document.body.classList.add('entrance-done');
+		} else {
+			setTimeout(() => document.body.classList.add('entrance-done'), TOTAL - elapsed);
+		}
 	}
 
 	if (document.readyState === 'loading') {
 		document.addEventListener('DOMContentLoaded', () => {
 			runEntrance();
-			attachAvatarListeners && attachAvatarListeners(); // re-attach if present
+			attachAvatarListeners && attachAvatarListeners();
 		});
 	} else {
 		runEntrance();
@@ -34,33 +47,69 @@
 	window.setAvatar = setAvatar;
 	window.resetAvatar = resetAvatar;
 
-	// --- New: per-avatar note panels (no layout shift) ---
 	let openBox = null;
 	let openCard = null;
 	let outsideClickHandler = null;
 	let escHandler = null;
 
+	function escapeHtml(s) {
+		return (s || '').replace(/[&<>"']/g, function (c) {
+			return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+		});
+	}
+
+	function renderNotesText(text) {
+		if (!text) return '';
+		return text.split(/\r?\n/).map(line => `<p>${escapeHtml(line)}</p>`).join('');
+	}
+
+	function getNotesFromCard(card) {
+		const src = card.querySelector('.friend-notes-source');
+		if (src && src.textContent.trim()) return src.textContent.trim();
+		return card.dataset.notes || '';
+	}
+
 	function createNoteBox(card) {
 		const name = (card.querySelector('.friend-name') || {}).textContent || '';
+		const notesHtml = renderNotesText(getNotesFromCard(card));
 		const box = document.createElement('div');
 		box.className = 'friend-note-box';
 		box.innerHTML = `
 			<div class="friend-note-inner" aria-hidden="false">
-				<h4 class="note-header">${name}</h4>
-				<div class="note-quotes"><!-- notes left empty for now --></div>
+				<h4 class="note-header">${escapeHtml(name)}</h4>
+				<div class="note-quotes">${notesHtml}</div>
 			</div>
 		`;
 		return box;
 	}
 
+	function updateOpenNoteContentFor(card) {
+		if (!openCard || openCard !== card || !openBox) return;
+		const quotes = openBox.querySelector('.note-quotes');
+		if (quotes) quotes.innerHTML = renderNotesText(getNotesFromCard(card));
+	}
+
+	window.setNote = function (id, text) {
+		if (!id) return;
+		const img = document.querySelector(`img[data-discord-id="${id}"]`);
+		if (!img) return;
+		const card = img.closest('.friend-card');
+		if (!card) return;
+		const src = card.querySelector('.friend-notes-source');
+		if (src) src.textContent = text || '';
+		card.dataset.notes = text || '';
+		updateOpenNoteContentFor(card);
+	};
+
+	window.clearNote = function (id) {
+		window.setNote(id, '');
+	};
+
 	function openNoteUnder(card) {
 		if (openCard && openCard !== card) closeNote();
-
-		// if already open on this card, toggle handled by caller
 		const box = createNoteBox(card);
-		card.appendChild(box); // append inside card (absolute) so it doesn't move siblings
+		card.appendChild(box);
 
-		// force reflow then add open class to animate
 		void box.offsetHeight;
 		requestAnimationFrame(() => box.classList.add('open'));
 
@@ -68,15 +117,11 @@
 		card.setAttribute('aria-expanded', 'true');
 		openBox = box;
 		openCard = card;
-
-		// close when clicking outside
 		outsideClickHandler = (e) => {
 			if (!openCard) return;
 			if (!openCard.contains(e.target)) closeNote();
 		};
 		document.addEventListener('click', outsideClickHandler);
-
-		// close on Escape
 		escHandler = (e) => { if (e.key === 'Escape') closeNote(); };
 		document.addEventListener('keydown', escHandler);
 	}
@@ -85,12 +130,9 @@
 		if (!openBox || !openCard) return;
 		const box = openBox;
 		const card = openCard;
-		// animate out
 		box.classList.remove('open');
 		card.classList.remove('active');
 		card.setAttribute('aria-expanded', 'false');
-
-		// remove element after transition
 		const cleanup = (e) => {
 			if (!e || e.propertyName === 'opacity') {
 				if (box.parentNode) box.parentNode.removeChild(box);
@@ -101,7 +143,6 @@
 			}
 		};
 		box.addEventListener('transitionend', cleanup);
-		// fallback cleanup if transitionend doesn't fire
 		setTimeout(cleanup, 420);
 	}
 
@@ -113,7 +154,6 @@
 			closeNote();
 		} else {
 			openNoteUnder(card);
-			// ensure card is visible on small screens
 			if (window.innerWidth < 900) {
 				setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 260);
 			}

@@ -1,3 +1,9 @@
+:root {
+  --phawse-entrance-total: 1500ms;
+  --phawse-card-delay-step: 80ms;
+  --phawse-card-anim: 420ms;
+}
+
 body {
   background: #0a0a0f;
   min-block-size: 100vh;
@@ -65,7 +71,7 @@ body::-webkit-scrollbar {
   backdrop-filter: blur(10px);
   opacity: 0;
   transform: translateY(10px) scale(.995);
-  position: relative; /* added so note is positioned relative to the card */
+  position: relative;
 }
 
 .friend-card.active {
@@ -144,26 +150,24 @@ body::-webkit-scrollbar {
   margin-inline-end: auto;
 }
 
-.friends-grid .friend-card:nth-child(1)  { animation-delay: 80ms;  }
-.friends-grid .friend-card:nth-child(2)  { animation-delay: 160ms; }
-.friends-grid .friend-card:nth-child(3)  { animation-delay: 240ms; }
-.friends-grid .friend-card:nth-child(4)  { animation-delay: 320ms; }
-.friends-grid .friend-card:nth-child(5)  { animation-delay: 400ms; }
-.friends-grid .friend-card:nth-child(6)  { animation-delay: 480ms; }
-.friends-grid .friend-card:nth-child(7)  { animation-delay: 560ms; }
-.friends-grid .friend-card:nth-child(8)  { animation-delay: 640ms; }
-.friends-grid .friend-card:nth-child(9)  { animation-delay: 720ms; }
-.friends-grid .friend-card:nth-child(10) { animation-delay: 800ms; }
+.friends-grid .friend-card:nth-child(1)  { animation-delay: calc(var(--phawse-card-delay-step) * 1);  }
+.friends-grid .friend-card:nth-child(2)  { animation-delay: calc(var(--phawse-card-delay-step) * 2);  }
+.friends-grid .friend-card:nth-child(3)  { animation-delay: calc(var(--phawse-card-delay-step) * 3);  }
+.friends-grid .friend-card:nth-child(4)  { animation-delay: calc(var(--phawse-card-delay-step) * 4);  }
+.friends-grid .friend-card:nth-child(5)  { animation-delay: calc(var(--phawse-card-delay-step) * 5);  }
+.friends-grid .friend-card:nth-child(6)  { animation-delay: calc(var(--phawse-card-delay-step) * 6);  }
+.friends-grid .friend-card:nth-child(7)  { animation-delay: calc(var(--phawse-card-delay-step) * 7);  }
+.friends-grid .friend-card:nth-child(8)  { animation-delay: calc(var(--phawse-card-delay-step) * 8);  }
+.friends-grid .friend-card:nth-child(9)  { animation-delay: calc(var(--phawse-card-delay-step) * 9);  }
+.friends-grid .friend-card:nth-child(10) { animation-delay: calc(var(--phawse-card-delay-step) * 10); }
 
-/* keyframe for fade/slide up */
 @keyframes cardFadeUp {
   from { opacity: 0; transform: translateY(10px) scale(.995); }
   to   { opacity: 1; transform: none; }
 }
 
-/* when entrance completes, animate cards in with a small stagger */
 body.entrance-done .friend-card {
-  animation: cardFadeUp 420ms cubic-bezier(.2,.9,.22,1) forwards;
+  animation: cardFadeUp var(--phawse-card-anim) cubic-bezier(.2,.9,.22,1) forwards;
 }
 
 body::after {
@@ -276,7 +280,216 @@ body::after {
   backdrop-filter: blur(10px);
   opacity: 0;
   transform: translateY(10px) scale(.995);
-  position: relative; /* added so note is positioned relative to the card */
+  position: relative;
+}
+
+.friend-card.active {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px rgba(167, 139, 250, 0.22);
+  border-color: rgba(167, 139, 250, 0.6);
+}
+
+.friend-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 10px 30px rgba(167, 139, 250, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.friend-card.pink:hover {
+  border-color: rgba(255, 192, 217, 0.55);
+  box-shadow: 0 12px 40px rgba(255, 192, 217, 0.25), 0 0 60px rgba(215, 201, 255, 0.18);
+  background: rgba(255, 192, 217, 0.08);
+}
+
+.friend-card.crimson:hover {
+  border-color: rgba(220, 20, 60, 0.55);
+  box-shadow: 0 12px 40px rgba(220, 20, 60, 0.25), 0 0 60px rgba(255, 192, 217, 0.15);
+}
+
+.friend-card.purple:hover {
+  border-color: rgba(167, 139, 250, 0.55);
+  box-shadow: 0 12px 40px rgba(167, 139, 250, 0.25), 0 0 60px rgba(99, 102, 241, 0.15);
+  background: rgba(167, 139, 250, 0.10);
+}
+
+.friend-card.green:hover {
+  border-color: rgba(74, 222, 128, 0.55);
+  box-shadow: 0 12px 40px rgba(74, 222, 128, 0.25), 0 0 60px rgba(134, 239, 172, 0.15);
+  background: rgba(74, 222, 128, 0.10);
+}
+
+.friend-card.white:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 10px 24px rgba(255, 255, 255, 0.22),
+    0 0 36px rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.friend-card.black:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 10px 24px rgba(255, 255, 255, 0.22),
+    0 0 36px rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.friend-card.white .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.friend-card.white:hover .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.friend-card.black .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.friends-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-block-end: 3rem;
+  justify-items: center;
+  max-inline-size: 900px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.friends-grid .friend-card:nth-child(1)  { animation-delay: calc(var(--phawse-card-delay-step) * 1);  }
+.friends-grid .friend-card:nth-child(2)  { animation-delay: calc(var(--phawse-card-delay-step) * 2);  }
+.friends-grid .friend-card:nth-child(3)  { animation-delay: calc(var(--phawse-card-delay-step) * 3);  }
+.friends-grid .friend-card:nth-child(4)  { animation-delay: calc(var(--phawse-card-delay-step) * 4);  }
+.friends-grid .friend-card:nth-child(5)  { animation-delay: calc(var(--phawse-card-delay-step) * 5);  }
+.friends-grid .friend-card:nth-child(6)  { animation-delay: calc(var(--phawse-card-delay-step) * 6);  }
+.friends-grid .friend-card:nth-child(7)  { animation-delay: calc(var(--phawse-card-delay-step) * 7);  }
+.friends-grid .friend-card:nth-child(8)  { animation-delay: calc(var(--phawse-card-delay-step) * 8);  }
+.friends-grid .friend-card:nth-child(9)  { animation-delay: calc(var(--phawse-card-delay-step) * 9);  }
+.friends-grid .friend-card:nth-child(10) { animation-delay: calc(var(--phawse-card-delay-step) * 10); }
+
+@keyframes cardFadeUp {
+  from { opacity: 0; transform: translateY(10px) scale(.995); }
+  to   { opacity: 1; transform: none; }
+}
+
+body.entrance-done .friend-card {
+  animation: cardFadeUp var(--phawse-card-anim) cubic-bezier(.2,.9,.22,1) forwards;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 60% 70%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 80% 10%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 90% 60%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 33% 80%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 15% 60%, rgba(255, 255, 255, 0.3), transparent);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: floatParticles 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+@keyframes floatParticles {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+
+.back-button {
+  position: fixed;
+  inset-block-start: 2rem;
+  inset-inline-start: 2rem;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 192, 217, 0.4);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 192, 217, 0.15),
+    0 0 60px rgba(215, 201, 255, 0.12);
+}
+
+.friends-container {
+  max-inline-size: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  padding-block-start: 5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.friends-title {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  margin-block-end: 0.5rem;
+  background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.friends-subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+  margin-block-end: 3rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.friends-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-block-end: 3rem;
+  justify-items: center;
+  max-inline-size: 900px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.friend-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(10px) scale(.995);
+  position: relative;
 }
 
 .friend-card.active {
@@ -509,7 +722,7 @@ body::after {
 }
 
 body.entrance-done .friend-card {
-  animation: cardFadeUp 420ms cubic-bezier(.2,.9,.22,1) forwards;
+  animation: cardFadeUp var(--phawse-card-anim) cubic-bezier(.2,.9,.22,1) forwards;
 }
 
 .friend-note-box {
@@ -526,21 +739,20 @@ body.entrance-done .friend-card {
 	border: 1px solid rgba(255,255,255,0.05);
 	background: rgba(255,255,255,0.02);
 	box-shadow: 0 8px 30px rgba(0,0,0,0.35);
-	/* remove previous flow-based properties */
 	overflow: hidden;
 }
 
-/* inner padding remains */
 .friend-note-inner { padding: 1rem 1.25rem; }
 
-/* open state: shows the panel */
+.friend-note-inner .note-quotes p {
+	margin: 0 0 0.5rem 0;
+}
+
 .friend-note-box.open {
 	opacity: 1;
 	transform: translateY(0);
 	pointer-events: auto;
 }
-
-/* small screens: make sure the panel doesn't overflow viewport horizontally */
 @media (max-width: 520px) {
 	.friend-note-box {
 		left: -8px;

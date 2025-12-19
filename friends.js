@@ -1,5 +1,5 @@
 (function () {
-	const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
+	const REFRESH_INTERVAL = 5 * 60 * 1000;
 	const apiBase = (document.body && document.body.dataset && document.body.dataset.avatarApi) || '';
 
 	function cacheBustAndSwap(img) {
@@ -15,6 +15,22 @@
 	async function fetchAvatarUrlFromApi(id, size = 1024) {
 		if (!apiBase) return null;
 		try {
+			// ivr.fi public user info API
+			if (apiBase === 'ivr' || apiBase.includes('ivr.fi')) {
+				const res = await fetch(`https://api.ivr.fi/v2/user/${encodeURIComponent(id)}`);
+				if (!res.ok) return null;
+				const data = await res.json();
+				if (data && data.avatar) {
+					const isGif = data.avatar.startsWith('a_');
+					const ext = isGif ? 'gif' : 'webp';
+					return `https://cdn.discordapp.com/avatars/${id}/${data.avatar}.${ext}?size=${size}`;
+				}
+				// default avatar
+				const idx = (parseInt(data.discriminator || '0') % 5);
+				return `https://cdn.discordapp.com/embed/avatars/${idx}.png`;
+			}
+
+			// generic API: expect { "url": "..." }
 			const url = apiBase.replace(/\/$/, '') + '/' + encodeURIComponent(id) + '?size=' + encodeURIComponent(size);
 			const res = await fetch(url);
 			if (!res.ok) return null;
@@ -28,6 +44,7 @@
 	async function updateImg(img) {
 		const id = img.dataset.discordId;
 		if (!id) return;
+		// prefer API if configured; otherwise cache-bust
 		if (apiBase) {
 			const url = await fetchAvatarUrlFromApi(id, img.dataset.size || 1024);
 			if (url) { if (img.src !== url) img.src = url; return; }
@@ -41,9 +58,6 @@
 		if (!imgs.length) return;
 		imgs.forEach(updateImg);
 		setInterval(() => imgs.forEach(updateImg), REFRESH_INTERVAL);
-
-		const btn = document.getElementById('refresh-avatars');
-		if (btn) btn.addEventListener('click', () => imgs.forEach(updateImg));
 	}
 
 	if (document.readyState === 'loading') {

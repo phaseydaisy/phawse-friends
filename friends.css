@@ -97,6 +97,8 @@ body::before {
   align-items: center;
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   backdrop-filter: blur(8px);
+  /* ensure cards are visible even if animations were removed */
+  opacity: 1;
 }
 
 .friend-card:hover {
@@ -105,6 +107,29 @@ body::before {
   box-shadow: 0 14px 38px rgba(167,139,250,0.14);
 }
 
+/* fallback avatar shown when image fails to load */
+.avatar-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  user-select: none;
+  text-transform: uppercase;
+}
+
+/* color variants to match card classes */
+.friend-card.pink .avatar-fallback { background: linear-gradient(135deg,#ffb6d9,#f3a6ff); }
+.friend-card.crimson .avatar-fallback { background: linear-gradient(135deg,#ff9aa2,#ff6b8a); }
+.friend-card.purple .avatar-fallback { background: linear-gradient(135deg,#b59cff,#a78bfa); }
+.friend-card.green .avatar-fallback { background: linear-gradient(135deg,#86e6a9,#4ade80); }
+.friend-card.white .avatar-fallback { background: linear-gradient(135deg,#ffffff,#f3f4f6); color:#0a0a0f; }
+.friend-card.black .avatar-fallback { background: linear-gradient(135deg,#555,#222); }
+
 .friend-avatar {
   width: 64px;
   height: 64px;
@@ -112,6 +137,9 @@ body::before {
   overflow: hidden;
   flex: 0 0 64px;
   border: 1px solid rgba(255,255,255,0.06);
+  /* ensure avatar wrapper keeps square aspect on small sizes */
+  min-width: 48px;
+  min-height: 48px;
 }
 
 .friend-avatar img {
@@ -119,21 +147,6 @@ body::before {
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.friend-info {
-  flex: 1 1 auto;
-}
-
-.friend-name {
-  margin: 0 0 .25rem 0;
-  font-size: 1.05rem;
-}
-
-.friend-note {
-  margin: 0;
-  color: rgba(255,255,255,0.7);
-  font-size: .95rem;
 }
 
 /* responsive tweaks */

@@ -1,63 +1,67 @@
 <!DOCTYPE html>
-</div>
-  <link rel="icon" href="https://cdn.discordapp.com/attachments/1312641194810933258/1414362852944384101/IMG_6468.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Urbanist:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="friends.css?v=6">
+<html lang="en">
+<head>
+	<link rel="icon" href="https://cdn.discordapp.com/attachments/1312641194810933258/1414362852944384101/IMG_6468.png" type="image/png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Urbanist:wght@700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="friends.css?v=6">
 </head>
-<body>
-  <div class="background-grid"></div>
-  <div class="gradient-orb orb-1"></div>
-  <div class="gradient-orb orb-2"></div>
-  <div class="gradient-orb orb-3"></div>
+<body data-avatar-api="">
+	<div class="background-grid"></div>
+	<div class="gradient-orb orb-1"></div>
+	<div class="gradient-orb orb-2"></div>
+	<div class="gradient-orb orb-3"></div>
 
-  <a href="https://phawse.lol" class="back-button">← Back to Home</a>
-  
-  <div class="friends-container">
-    <h1 class="friends-title">My Besto Friendo's</h1>
-    <p class="friends-subtitle">amazing people I love and appreciate</p>
-    
-    <div class="friends-grid">
-      <div class="friend-card pink">
-        <div class="friend-avatar">
-          <img data-discord-id="1022426512923836426" src="https://cdn.discordapp.com/avatars/1022426512923836426/882c65361c8f1de5685f6ffdb71482fc.webp?size=1024" alt="Bella Senpai">
-        </div>
-        <div class="friend-info">
-          <h3 class="friend-name">Bella Senpai 🥹</h3>
-          <p class="friend-note">My number zero Bestfriend.</p>
-        </div>
-      </div>
+	<a href="https://phawse.lol" class="back-button">← Back to Home</a>
 
-      <div class="friend-card crimson">
-        <div class="friend-avatar">
-          <img data-discord-id="506327916280283157" src="https://cdn.discordapp.com/avatars/506327916280283157/5101e85ca27fc28477669e22f2861ceb.webp?size=1024" alt="Ryan">
-        </div>
-        <div class="friend-info">
-          <h3 class="friend-name">Ryan ❤️‍🩹</h3>
-          <p class="friend-note">By far my most trustworthy, and respectable friend.</p>
-        </div>
-      </div>
-      
-</body>
-      <div class="friend-card pink">
-        <div class="friend-avatar">
-          <img data-discord-id="1067807613959548959" src="https://cdn.discordapp.com/avatars/1067807613959548959/564d79e0c281a176d0b771e022ab04d3.webp?size=1024" alt="Asgort">
-        </div>
-        <div class="friend-info">
-          <h3 class="friend-name">Asgort 🐼</h3>
-          <p class="friend-note">My little sister.</p>
-        </div>
-      </div>
+	<div class="friends-container">
+		<h1 class="friends-title">My Besto Friendo's</h1>
+		<p class="friends-subtitle">amazing people I love and appreciate</p>
 
-    </div>
+		<div class="avatars-controls">
+			<button id="refresh-avatars" type="button">Refresh Avatars</button>
+			<small class="avatars-note">No API configured — this forces a refetch but may not detect newly-hashed avatars. To guarantee updates, set body[data-avatar-api] to an endpoint that returns { "url": "..." } for a user id.</small>
+		</div>
 
-    <div class="friends-note">
-      <p>💖 All my precious friends</p>
-    </div>
+		<div class="friends-grid">
+			<div class="friend-card pink">
+				<div class="friend-avatar">
+					<img data-discord-id="1022426512923836426" src="https://cdn.discordapp.com/avatars/1022426512923836426/882c65361c8f1de5685f6ffdb71482fc.webp?size=1024" alt="Bella Senpai">
+				</div>
+				<div class="friend-info">
+					<h3 class="friend-name">Bella Senpai 🥹</h3>
+					<p class="friend-note">My number zero Bestfriend.</p>
+				</div>
+			</div>
 
-    
-  </div>
+			<div class="friend-card crimson">
+				<div class="friend-avatar">
+					<img data-discord-id="506327916280283157" src="https://cdn.discordapp.com/avatars/506327916280283157/5101e85ca27fc28477669e22f2861ceb.webp?size=1024" alt="Ryan">
+				</div>
+				<div class="friend-info">
+					<h3 class="friend-name">Ryan ❤️‍🩹</h3>
+					<p class="friend-note">By far my most trustworthy, and respectable friend.</p>
+				</div>
+			</div>
+
+			<div class="friend-card pink">
+				<div class="friend-avatar">
+					<img data-discord-id="1067807613959548959" src="https://cdn.discordapp.com/avatars/1067807613959548959/564d79e0c281a176d0b771e022ab04d3.webp?size=1024" alt="Asgort">
+				</div>
+				<div class="friend-info">
+					<h3 class="friend-name">Asgort 🐼</h3>
+					<p class="friend-note">My little sister.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="friends-note">
+			<p>💖 All my precious friends</p>
+		</div>
+	</div>
+
+	<script src="friends.js"></script>
 </body>
 </html>
 

@@ -1,9 +1,8 @@
 (function () {
 	'use strict';
 
-	// Entrance: add class after a short delay so cards can animate in.
 	function runEntrance() {
-		const SHOW_MS = 120; // short delay before revealing cards
+		const SHOW_MS = 120;
 		setTimeout(() => document.body.classList.add('entrance-done'), SHOW_MS);
 	}
 
@@ -35,8 +34,11 @@
 	window.setAvatar = setAvatar;
 	window.resetAvatar = resetAvatar;
 
+	// --- New: per-avatar note panels (no layout shift) ---
 	let openBox = null;
 	let openCard = null;
+	let outsideClickHandler = null;
+	let escHandler = null;
 
 	function createNoteBox(card) {
 		const name = (card.querySelector('.friend-name') || {}).textContent || '';
@@ -52,58 +54,55 @@
 	}
 
 	function openNoteUnder(card) {
-		if (openCard && openCard !== card) {
-			closeNote();
-		}
-		const box = createNoteBox(card);
-		card.parentNode.insertBefore(box, card.nextSibling);
-		const inner = box.querySelector('.friend-note-inner');
-		box.style.maxHeight = '0px';
-		box.style.opacity = '0';
-		void box.offsetHeight;
-		const target = inner.scrollHeight + 8;
-		box.style.transition = 'max-height 320ms ease, opacity 220ms ease';
-		requestAnimationFrame(() => {
-			box.style.maxHeight = target + 'px';
-			box.style.opacity = '1';
-		});
+		if (openCard && openCard !== card) closeNote();
 
-		const onTransEnd = (e) => {
-			if (e.propertyName === 'max-height') {
-				box.style.maxHeight = 'none';
-				box.removeEventListener('transitionend', onTransEnd);
-			}
-		};
-		box.addEventListener('transitionend', onTransEnd);
+		// if already open on this card, toggle handled by caller
+		const box = createNoteBox(card);
+		card.appendChild(box); // append inside card (absolute) so it doesn't move siblings
+
+		// force reflow then add open class to animate
+		void box.offsetHeight;
+		requestAnimationFrame(() => box.classList.add('open'));
 
 		card.classList.add('active');
 		card.setAttribute('aria-expanded', 'true');
 		openBox = box;
 		openCard = card;
+
+		// close when clicking outside
+		outsideClickHandler = (e) => {
+			if (!openCard) return;
+			if (!openCard.contains(e.target)) closeNote();
+		};
+		document.addEventListener('click', outsideClickHandler);
+
+		// close on Escape
+		escHandler = (e) => { if (e.key === 'Escape') closeNote(); };
+		document.addEventListener('keydown', escHandler);
 	}
 
 	function closeNote() {
 		if (!openBox || !openCard) return;
 		const box = openBox;
 		const card = openCard;
-		const current = box.scrollHeight;
-		box.style.maxHeight = current + 'px';
-		void box.offsetHeight;
-		requestAnimationFrame(() => {
-			box.style.maxHeight = '0px';
-			box.style.opacity = '0';
-		});
+		// animate out
+		box.classList.remove('open');
+		card.classList.remove('active');
+		card.setAttribute('aria-expanded', 'false');
+
+		// remove element after transition
 		const cleanup = (e) => {
-			if (e.propertyName === 'max-height') {
-				if (box && box.parentNode) box.parentNode.removeChild(box);
+			if (!e || e.propertyName === 'opacity') {
+				if (box.parentNode) box.parentNode.removeChild(box);
 				openBox = null;
 				openCard = null;
-				card.classList.remove('active');
-				card.setAttribute('aria-expanded', 'false');
-				box.removeEventListener('transitionend', cleanup);
+				document.removeEventListener('click', outsideClickHandler);
+				document.removeEventListener('keydown', escHandler);
 			}
 		};
 		box.addEventListener('transitionend', cleanup);
+		// fallback cleanup if transitionend doesn't fire
+		setTimeout(cleanup, 420);
 	}
 
 	function onAvatarClick(e) {
@@ -114,10 +113,9 @@
 			closeNote();
 		} else {
 			openNoteUnder(card);
+			// ensure card is visible on small screens
 			if (window.innerWidth < 900) {
-				setTimeout(() => {
-					card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-				}, 260);
+				setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 260);
 			}
 		}
 	}

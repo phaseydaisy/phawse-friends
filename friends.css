@@ -65,6 +65,7 @@ body::-webkit-scrollbar {
   backdrop-filter: blur(10px);
   opacity: 0;
   transform: translateY(10px) scale(.995);
+  position: relative; /* added so note is positioned relative to the card */
 }
 
 .friend-card.active {
@@ -275,6 +276,7 @@ body::after {
   backdrop-filter: blur(10px);
   opacity: 0;
   transform: translateY(10px) scale(.995);
+  position: relative; /* added so note is positioned relative to the card */
 }
 
 .friend-card.active {
@@ -511,33 +513,38 @@ body.entrance-done .friend-card {
 }
 
 .friend-note-box {
-  grid-column: 1 / -1;
-  overflow: hidden;
-  max-block-size: 0;
-  opacity: 0;
-  transition: max-height 320ms ease, opacity 220ms ease;
-  margin: 0.6rem 0;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.05);
-  background: rgba(255,255,255,0.02);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+	position: absolute;
+	left: 0;
+	top: calc(100% + 8px);
+	inline-size: 100%;
+	opacity: 0;
+	transform: translateY(6px) scale(.995);
+	pointer-events: none;
+	transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
+	z-index: 20;
+	border-radius: 12px;
+	border: 1px solid rgba(255,255,255,0.05);
+	background: rgba(255,255,255,0.02);
+	box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+	/* remove previous flow-based properties */
+	overflow: hidden;
 }
 
-.friend-note-inner {
-  padding: 1rem 1.25rem;
+/* inner padding remains */
+.friend-note-inner { padding: 1rem 1.25rem; }
+
+/* open state: shows the panel */
+.friend-note-box.open {
+	opacity: 1;
+	transform: translateY(0);
+	pointer-events: auto;
 }
 
-.friend-note-inner .note-header {
-  margin: 0 0 0.5rem 0;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 700;
-  color: #fff;
-  font-size: 1rem;
-}
-
-.friend-note-inner .note-quotes {
-  color: rgba(255,255,255,0.65);
-  font-style: italic;
-  min-block-size: 2.2rem;
+/* small screens: make sure the panel doesn't overflow viewport horizontally */
+@media (max-width: 520px) {
+	.friend-note-box {
+		left: -8px;
+		inline-size: calc(100% + 16px);
+	}
 }
 

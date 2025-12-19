@@ -1,30 +1,20 @@
 (function () {
 	'use strict';
 
+	// Entrance: add class after a short delay so cards can animate in.
 	function runEntrance() {
-		const overlay = document.querySelector('.enter-overlay');
-		if (!overlay) {
-			document.body.classList.add('entrance-done');
-			return;
-		}
-		const SHOW_MS = 900;
-		let timeout = setTimeout(() => document.body.classList.add('entrance-done'), SHOW_MS);
-		const skip = () => {
-			clearTimeout(timeout);
-			document.body.classList.add('entrance-done');
-		};
-		overlay.addEventListener('click', skip, { once: true, passive: true });
-		const CLEANUP_MS = SHOW_MS + 800;
-		setTimeout(() => {
-			if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
-		}, CLEANUP_MS);
+		const SHOW_MS = 120; // short delay before revealing cards
+		setTimeout(() => document.body.classList.add('entrance-done'), SHOW_MS);
 	}
 
 	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', () => { runEntrance(); attachAvatarListeners(); });
+		document.addEventListener('DOMContentLoaded', () => {
+			runEntrance();
+			attachAvatarListeners && attachAvatarListeners(); // re-attach if present
+		});
 	} else {
 		runEntrance();
-		attachAvatarListeners();
+		attachAvatarListeners && attachAvatarListeners();
 	}
 
 	function setAvatar(id, url) {

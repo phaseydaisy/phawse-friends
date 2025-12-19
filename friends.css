@@ -1,6 +1,6 @@
 body {
   background: #0a0a0f;
-  min-height: 100vh;
+  min-block-size: 100vh;
   position: relative;
   overflow-x: hidden;
   -ms-overflow-style: none;
@@ -9,10 +9,10 @@ body {
 body::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   background: 
     radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3), transparent 50%),
@@ -26,16 +26,16 @@ html, body {
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+  inline-size: 0;
+  block-size: 0;
 }
 
 .background-grid {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   background-image: 
     linear-gradient(rgba(138, 201, 255, 0.05) 2px, transparent 2px),
     linear-gradient(90deg, rgba(138, 201, 255, 0.05) 2px, transparent 2px),
@@ -53,88 +53,125 @@ body::-webkit-scrollbar {
   100% { transform: translate(100px, 100px); }
 }
 
-.gradient-orb {
-  position: fixed;
-  filter: blur(120px);
-  opacity: 0.4;
-  pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: screen;
+.friend-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(10px) scale(.995);
 }
 
-.orb-1 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, #ff6ec4 0%, #7873f5 50%, transparent 70%);
-  animation: morphOrb1 15s ease-in-out infinite;
+.friend-card.active {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px rgba(167, 139, 250, 0.22);
+  border-color: rgba(167, 139, 250, 0.6);
 }
 
-.orb-2 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, #8ac9ff 0%, #c780fa 50%, transparent 70%);
-  animation: morphOrb2 18s ease-in-out infinite;
+.friend-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 10px 30px rgba(167, 139, 250, 0.2);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.orb-3 {
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, #ffd27d 0%, #ff9a76 50%, transparent 70%);
-  animation: morphOrb3 20s ease-in-out infinite;
+.friend-card.pink:hover {
+  border-color: rgba(255, 192, 217, 0.55);
+  box-shadow: 0 12px 40px rgba(255, 192, 217, 0.25), 0 0 60px rgba(215, 201, 255, 0.18);
+  background: rgba(255, 192, 217, 0.08);
 }
 
-@keyframes morphOrb1 {
-  0%, 100% { 
-    transform: translate(-10%, -10%) rotate(0deg) scale(1);
-    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-  }
-  33% { 
-    transform: translate(5%, 15%) rotate(120deg) scale(1.1);
-    border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
-  }
-  66% { 
-    transform: translate(-5%, 5%) rotate(240deg) scale(0.9);
-    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-  }
+.friend-card.crimson:hover {
+  border-color: rgba(220, 20, 60, 0.55);
+  box-shadow: 0 12px 40px rgba(220, 20, 60, 0.25), 0 0 60px rgba(255, 192, 217, 0.15);
 }
 
-@keyframes morphOrb2 {
-  0%, 100% { 
-    transform: translate(10%, 10%) rotate(0deg) scale(1);
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  }
-  33% { 
-    transform: translate(-15%, -5%) rotate(120deg) scale(1.15);
-    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-  }
-  66% { 
-    transform: translate(10%, -10%) rotate(240deg) scale(0.95);
-    border-radius: 70% 30% 40% 60% / 40% 50% 60% 50%;
-  }
+.friend-card.purple:hover {
+  border-color: rgba(167, 139, 250, 0.55);
+  box-shadow: 0 12px 40px rgba(167, 139, 250, 0.25), 0 0 60px rgba(99, 102, 241, 0.15);
+  background: rgba(167, 139, 250, 0.10);
 }
 
-@keyframes morphOrb3 {
-  0%, 100% { 
-    transform: translate(0%, 15%) rotate(0deg) scale(1);
-    border-radius: 50% 50% 30% 70% / 30% 70% 70% 30%;
-  }
-  33% { 
-    transform: translate(-10%, -10%) rotate(135deg) scale(1.2);
-    border-radius: 40% 60% 60% 40% / 70% 30% 30% 70%;
-  }
-  66% { 
-    transform: translate(15%, 0%) rotate(270deg) scale(0.85);
-    border-radius: 60% 40% 50% 50% / 50% 50% 40% 60%;
-  }
+.friend-card.green:hover {
+  border-color: rgba(74, 222, 128, 0.55);
+  box-shadow: 0 12px 40px rgba(74, 222, 128, 0.25), 0 0 60px rgba(134, 239, 172, 0.15);
+  background: rgba(74, 222, 128, 0.10);
+}
+
+.friend-card.white:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 10px 24px rgba(255, 255, 255, 0.22),
+    0 0 36px rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.friend-card.black:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 10px 24px rgba(255, 255, 255, 0.22),
+    0 0 36px rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.friend-card.white .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.friend-card.white:hover .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.friend-card.black .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.friends-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-block-end: 3rem;
+  justify-items: center;
+  max-inline-size: 900px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.friends-grid .friend-card:nth-child(1)  { animation-delay: 80ms;  }
+.friends-grid .friend-card:nth-child(2)  { animation-delay: 160ms; }
+.friends-grid .friend-card:nth-child(3)  { animation-delay: 240ms; }
+.friends-grid .friend-card:nth-child(4)  { animation-delay: 320ms; }
+.friends-grid .friend-card:nth-child(5)  { animation-delay: 400ms; }
+.friends-grid .friend-card:nth-child(6)  { animation-delay: 480ms; }
+.friends-grid .friend-card:nth-child(7)  { animation-delay: 560ms; }
+.friends-grid .friend-card:nth-child(8)  { animation-delay: 640ms; }
+.friends-grid .friend-card:nth-child(9)  { animation-delay: 720ms; }
+.friends-grid .friend-card:nth-child(10) { animation-delay: 800ms; }
+
+/* keyframe for fade/slide up */
+@keyframes cardFadeUp {
+  from { opacity: 0; transform: translateY(10px) scale(.995); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* when entrance completes, animate cards in with a small stagger */
+body.entrance-done .friend-card {
+  animation: cardFadeUp 420ms cubic-bezier(.2,.9,.22,1) forwards;
 }
 
 body::after {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   background-image: 
     radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.3), transparent),
     radial-gradient(2px 2px at 60% 70%, rgba(255, 255, 255, 0.3), transparent),
@@ -158,8 +195,8 @@ body::after {
 
 .back-button {
   position: fixed;
-  top: 2rem;
-  left: 2rem;
+  inset-block-start: 2rem;
+  inset-inline-start: 2rem;
   z-index: 100;
   display: inline-flex;
   align-items: center;
@@ -187,10 +224,10 @@ body::after {
 }
 
 .friends-container {
-  max-width: 1200px;
+  max-inline-size: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
-  padding-top: 5rem;
+  padding-block-start: 5rem;
   position: relative;
   z-index: 1;
 }
@@ -200,7 +237,7 @@ body::after {
   font-size: 3rem;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin-block-end: 0.5rem;
   background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f59e0b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -211,7 +248,7 @@ body::after {
   text-align: center;
   color: rgba(255, 255, 255, 0.6);
   font-size: 1.1rem;
-  margin-bottom: 3rem;
+  margin-block-end: 3rem;
   font-family: 'Inter', sans-serif;
 }
 
@@ -219,11 +256,11 @@ body::after {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 3rem;
+  margin-block-end: 3rem;
   justify-items: center;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  max-inline-size: 900px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
 }
 
 .friend-card {
@@ -236,6 +273,8 @@ body::after {
   gap: 1rem;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(10px) scale(.995);
 }
 
 .friend-card.active {
@@ -306,12 +345,12 @@ body::after {
 .friends-grid .full-row {
   grid-column: 1 / -1;
   justify-self: center;
-  max-width: 280px;
+  max-inline-size: 280px;
 }
 
 .friend-avatar {
-  width: 80px;
-  height: 80px;
+  inline-size: 80px;
+  block-size: 80px;
   border-radius: 50%;
   overflow: hidden;
   border: 3px solid rgba(255, 255, 255, 0.2);
@@ -356,8 +395,8 @@ body::after {
 }
 
 .friend-avatar img {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   object-fit: cover;
 }
 
@@ -392,7 +431,7 @@ body::after {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 120px;
+  min-block-size: 120px;
   text-align: center;
   padding: 1.5rem;
 }
@@ -404,19 +443,19 @@ body::after {
 
 .add-icon {
   font-size: 3rem;
-  margin-bottom: 1rem;
+  margin-block-end: 1rem;
   opacity: 0.6;
 }
 
 .add-friend h3 {
   font-family: 'Urbanist', sans-serif;
   font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  margin-block-end: 0.5rem;
 }
 
 .add-friend p {
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 1rem;
+  margin-block-end: 1rem;
 }
 
 .friend-link {
@@ -460,93 +499,21 @@ body::after {
 }
 
 .friends-note + .friends-note {
-  margin-top: 1.5rem;
+  margin-block-start: 1.5rem;
 }
 
 .friends-note + .friends-grid {
-  margin-top: 1rem;
+  margin-block-start: 1rem;
 }
 
-.enter-overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  background: radial-gradient(50% 50% at 50% 45%, rgba(10,10,15,0.95), rgba(10,10,15,0.98));
-  pointer-events: auto;
-  will-change: opacity, transform;
+body.entrance-done .friend-card {
+  animation: cardFadeUp 420ms cubic-bezier(.2,.9,.22,1) forwards;
 }
-
-.enter-orb {
-  position: absolute;
-  width: clamp(220px, 38vw, 420px);
-  height: clamp(220px, 38vw, 420px);
-  border-radius: 50%;
-  filter: blur(40px);
-  background: radial-gradient(circle, rgba(167,139,250,0.55) 0%, rgba(236,72,153,0.45) 45%, rgba(138,201,255,0.35) 70%, transparent 85%);
-  animation: enterOrbPulse 1400ms ease-in-out infinite alternate;
-  transform-origin: center;
-  opacity: 0.95;
-}
-
-.enter-logo {
-  position: relative;
-  z-index: 1;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.6rem, 5vw, 3.2rem);
-  background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f59e0b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0;
-  transform: translateY(8px) scale(.96);
-  animation: enterLogoPop 700ms cubic-bezier(.2,.9,.22,1) forwards;
-  animation-delay: 150ms;
-}
-
-@keyframes enterOrbPulse {
-  from { transform: scale(0.94) rotate(0deg); filter: blur(36px); }
-  to   { transform: scale(1.06) rotate(8deg); filter: blur(44px); }
-}
-
-@keyframes enterLogoPop {
-  from { opacity: 0; transform: translateY(10px) scale(.92); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-/* hide overlay when body has entrance-done, fade it out smoothly */
-body.entrance-done .enter-overlay {
-  animation: enterOverlayOut 600ms ease forwards;
-  pointer-events: none;
-}
-
-@keyframes enterOverlayOut {
-  0% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.02); visibility: hidden; }
-}
-
-/* reveal main content smoothly */
-.friends-container {
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 420ms ease, transform 420ms ease;
-}
-
-body.entrance-done .friends-container {
-  opacity: 1;
-  transform: none;
-  transition-delay: 320ms;
-}
-
-/* allow user to skip by clicking overlay */
-.enter-overlay:active { cursor: pointer; }
 
 .friend-note-box {
   grid-column: 1 / -1;
   overflow: hidden;
-  max-height: 0;
+  max-block-size: 0;
   opacity: 0;
   transition: max-height 320ms ease, opacity 220ms ease;
   margin: 0.6rem 0;
@@ -571,6 +538,6 @@ body.entrance-done .friends-container {
 .friend-note-inner .note-quotes {
   color: rgba(255,255,255,0.65);
   font-style: italic;
-  min-height: 2.2rem;
+  min-block-size: 2.2rem;
 }
 

@@ -1,39 +1,159 @@
-:root {
-  /* simplified, no entrance timing needed */
-  --card-radius: 16px;
-  --card-padding: 1.5rem;
-}
-
 body {
   background: #0a0a0f;
   min-height: 100vh;
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  color: #fff;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
 }
 
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 50%, rgba(120,119,198,0.25), transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(255,119,198,0.2), transparent 50%),
-    radial-gradient(circle at 40% 20%, rgba(138,201,255,0.12), transparent 50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3), transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(138, 201, 255, 0.25), transparent 50%);
   z-index: -1;
+}
+
+html, body {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .background-grid {
   position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(138,201,255,0.03) 2px, transparent 2px),
-    linear-gradient(90deg, rgba(138,201,255,0.03) 2px, transparent 2px);
-  background-size: 100px 100px, 100px 100px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(138, 201, 255, 0.05) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(138, 201, 255, 0.05) 2px, transparent 2px),
+    linear-gradient(rgba(138, 201, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138, 201, 255, 0.02) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
   z-index: 0;
   pointer-events: none;
+  animation: gridScroll 20s linear infinite;
+}
+
+@keyframes gridScroll {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(100px, 100px); }
+}
+
+.gradient-orb {
+  position: fixed;
+  filter: blur(120px);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+}
+
+.orb-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #ff6ec4 0%, #7873f5 50%, transparent 70%);
+  animation: morphOrb1 15s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #8ac9ff 0%, #c780fa 50%, transparent 70%);
+  animation: morphOrb2 18s ease-in-out infinite;
+}
+
+.orb-3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, #ffd27d 0%, #ff9a76 50%, transparent 70%);
+  animation: morphOrb3 20s ease-in-out infinite;
+}
+
+@keyframes morphOrb1 {
+  0%, 100% { 
+    transform: translate(-10%, -10%) rotate(0deg) scale(1);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  }
+  33% { 
+    transform: translate(5%, 15%) rotate(120deg) scale(1.1);
+    border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+  }
+  66% { 
+    transform: translate(-5%, 5%) rotate(240deg) scale(0.9);
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+@keyframes morphOrb2 {
+  0%, 100% { 
+    transform: translate(10%, 10%) rotate(0deg) scale(1);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  33% { 
+    transform: translate(-15%, -5%) rotate(120deg) scale(1.15);
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  66% { 
+    transform: translate(10%, -10%) rotate(240deg) scale(0.95);
+    border-radius: 70% 30% 40% 60% / 40% 50% 60% 50%;
+  }
+}
+
+@keyframes morphOrb3 {
+  0%, 100% { 
+    transform: translate(0%, 15%) rotate(0deg) scale(1);
+    border-radius: 50% 50% 30% 70% / 30% 70% 70% 30%;
+  }
+  33% { 
+    transform: translate(-10%, -10%) rotate(135deg) scale(1.2);
+    border-radius: 40% 60% 60% 40% / 70% 30% 30% 70%;
+  }
+  66% { 
+    transform: translate(15%, 0%) rotate(270deg) scale(0.85);
+    border-radius: 60% 40% 50% 50% / 50% 50% 40% 60%;
+  }
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 60% 70%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 80% 10%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 90% 60%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 33% 80%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 15% 60%, rgba(255, 255, 255, 0.3), transparent);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: floatParticles 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+@keyframes floatParticles {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
 }
 
 .back-button {
@@ -43,20 +163,35 @@ body::before {
   z-index: 100;
   display: inline-flex;
   align-items: center;
-  gap: .5rem;
-  padding: .75rem 1.25rem;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   color: #fff;
   text-decoration: none;
+  font-size: 0.9rem;
   font-weight: 600;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 192, 217, 0.4);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 192, 217, 0.15),
+    0 0 60px rgba(215, 201, 255, 0.12);
 }
 
 .friends-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 1rem;
+  padding: 2rem 1rem;
+  padding-top: 5rem;
+  position: relative;
   z-index: 1;
 }
 
@@ -65,94 +200,277 @@ body::before {
   font-size: 3rem;
   font-weight: 800;
   text-align: center;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f59e0b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .friends-subtitle {
   text-align: center;
-  color: rgba(255,255,255,0.6);
-  font-size: 1.05rem;
-  margin-bottom: 2.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+  font-family: 'Inter', sans-serif;
 }
 
 .friends-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+  margin-bottom: 3rem;
+  justify-items: center;
   max-width: 900px;
-  margin: 0 auto 3rem;
-  align-items: start;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .friend-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--card-radius);
-  padding: var(--card-padding);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
   display: flex;
-  gap: 1rem;
   align-items: center;
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-  backdrop-filter: blur(8px);
-  /* ensure cards are visible even if animations were removed */
-  opacity: 1;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 .friend-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(167,139,250,0.45);
-  box-shadow: 0 14px 38px rgba(167,139,250,0.14);
+  transform: translateY(-5px);
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 10px 30px rgba(167, 139, 250, 0.2);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-/* fallback avatar shown when image fails to load */
-.avatar-fallback {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: white;
-  font-size: 1.05rem;
-  letter-spacing: 0.02em;
-  user-select: none;
-  text-transform: uppercase;
+.friend-card.pink:hover {
+  border-color: rgba(255, 192, 217, 0.55);
+  box-shadow: 0 12px 40px rgba(255, 192, 217, 0.25), 0 0 60px rgba(215, 201, 255, 0.18);
+  background: rgba(255, 192, 217, 0.08);
 }
 
-/* color variants to match card classes */
-.friend-card.pink .avatar-fallback { background: linear-gradient(135deg,#ffb6d9,#f3a6ff); }
-.friend-card.crimson .avatar-fallback { background: linear-gradient(135deg,#ff9aa2,#ff6b8a); }
-.friend-card.purple .avatar-fallback { background: linear-gradient(135deg,#b59cff,#a78bfa); }
-.friend-card.green .avatar-fallback { background: linear-gradient(135deg,#86e6a9,#4ade80); }
-.friend-card.white .avatar-fallback { background: linear-gradient(135deg,#ffffff,#f3f4f6); color:#0a0a0f; }
-.friend-card.black .avatar-fallback { background: linear-gradient(135deg,#555,#222); }
+.friend-card.crimson:hover {
+  border-color: rgba(220, 20, 60, 0.55);
+  box-shadow: 0 12px 40px rgba(220, 20, 60, 0.25), 0 0 60px rgba(255, 192, 217, 0.15);
+}
+
+.friend-card.purple:hover {
+  border-color: rgba(167, 139, 250, 0.55);
+  box-shadow: 0 12px 40px rgba(167, 139, 250, 0.25), 0 0 60px rgba(99, 102, 241, 0.15);
+  background: rgba(167, 139, 250, 0.10);
+}
+
+.friend-card.green:hover {
+  border-color: rgba(74, 222, 128, 0.55);
+  box-shadow: 0 12px 40px rgba(74, 222, 128, 0.25), 0 0 60px rgba(134, 239, 172, 0.15);
+  background: rgba(74, 222, 128, 0.10);
+}
+
+.friend-card.white:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 10px 24px rgba(255, 255, 255, 0.22),
+    0 0 36px rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.friend-card.black:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 10px 24px rgba(255, 255, 255, 0.22),
+    0 0 36px rgba(255, 255, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.friend-card.white .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.friend-card.white:hover .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.friend-card.black .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.friends-grid .full-row {
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 280px;
+}
 
 .friend-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 12px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
   overflow: hidden;
-  flex: 0 0 64px;
-  border: 1px solid rgba(255,255,255,0.06);
-  /* ensure avatar wrapper keeps square aspect on small sizes */
-  min-width: 48px;
-  min-height: 48px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.friend-card:hover .friend-avatar {
+  border-color: rgba(167, 139, 250, 0.8);
+  transform: scale(1.1);
+}
+
+.friend-card.crimson .friend-avatar {
+  box-shadow: 0 0 16px rgba(220, 20, 60, 0.3);
+}
+.friend-card.crimson:hover .friend-avatar {
+  border-color: rgba(220, 20, 60, 0.8);
+  box-shadow: 0 0 24px rgba(220, 20, 60, 0.4);
+}
+
+.friend-card.pink .friend-avatar {
+  box-shadow: 0 0 16px rgba(255, 192, 217, 0.3);
+}
+.friend-card.pink:hover .friend-avatar {
+  border-color: rgba(255, 192, 217, 0.8);
+  box-shadow: 0 0 24px rgba(255, 192, 217, 0.4);
+}
+
+.friend-card.white .friend-avatar {
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.28);
+}
+.friend-card.white:hover .friend-avatar {
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.38);
+}
+
+.friend-card.black .friend-avatar {
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.28);
+}
+.friend-card.black:hover .friend-avatar {
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.38);
 }
 
 .friend-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
-/* responsive tweaks */
-@media (max-width: 520px) {
-  .friend-card { padding: 1rem; }
-  .friend-avatar { width: 56px; height: 56px; flex-basis: 56px; }
-  .friends-title { font-size: 2rem; }
+.friend-name {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+  cursor: default;
 }
 
+.friend-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.friend-note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  font-style: italic;
+  user-select: none;
+  cursor: default;
+}
+
+.add-friend {
+  background: rgba(236, 72, 153, 0.05);
+  border: 2px dashed rgba(236, 72, 153, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.add-friend:hover {
+  background: rgba(236, 72, 153, 0.1);
+  border-color: rgba(236, 72, 153, 0.6);
+}
+
+.add-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.add-friend h3 {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.add-friend p {
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1rem;
+}
+
+.friend-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 8px;
+  color: #a78bfa;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.add-friend .friend-link {
+  background: rgba(236, 72, 153, 0.2);
+  border-color: rgba(236, 72, 153, 0.4);
+  color: #ec4899;
+}
+
+.add-friend .friend-link:hover {
+  background: rgba(236, 72, 153, 0.3);
+  border-color: rgba(236, 72, 153, 0.7);
+}
+
+.friends-note {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  user-select: none;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.friends-note p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin: 0;
+}
+
+.friends-note + .friends-note {
+  margin-top: 1.5rem;
+}
+
+.friends-note + .friends-grid {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .friends-title {
+    font-size: 2rem;
+  }
+  
+  .friends-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .friends-container {
+    padding-top: 4rem;
+  }
+}

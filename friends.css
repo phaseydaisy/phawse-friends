@@ -1,6 +1,6 @@
 body {
   background: #0a0a0f;
-  min-height: 100vh;
+  min-block-size: 100vh;
   position: relative;
   overflow-x: hidden;
   -ms-overflow-style: none;
@@ -9,10 +9,10 @@ body {
 body::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   background: 
     radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3), transparent 50%),
@@ -26,16 +26,16 @@ html, body {
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+  inline-size: 0;
+  block-size: 0;
 }
 
 .background-grid {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   background-image: 
     linear-gradient(rgba(138, 201, 255, 0.05) 2px, transparent 2px),
     linear-gradient(90deg, rgba(138, 201, 255, 0.05) 2px, transparent 2px),
@@ -63,22 +63,22 @@ body::-webkit-scrollbar {
 }
 
 .orb-1 {
-  width: 600px;
-  height: 600px;
+  inline-size: 600px;
+  block-size: 600px;
   background: radial-gradient(circle, #ff6ec4 0%, #7873f5 50%, transparent 70%);
   animation: morphOrb1 15s ease-in-out infinite;
 }
 
 .orb-2 {
-  width: 500px;
-  height: 500px;
+  inline-size: 500px;
+  block-size: 500px;
   background: radial-gradient(circle, #8ac9ff 0%, #c780fa 50%, transparent 70%);
   animation: morphOrb2 18s ease-in-out infinite;
 }
 
 .orb-3 {
-  width: 450px;
-  height: 450px;
+  inline-size: 450px;
+  block-size: 450px;
   background: radial-gradient(circle, #ffd27d 0%, #ff9a76 50%, transparent 70%);
   animation: morphOrb3 20s ease-in-out infinite;
 }
@@ -131,10 +131,10 @@ body::-webkit-scrollbar {
 body::after {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
   background-image: 
     radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.3), transparent),
     radial-gradient(2px 2px at 60% 70%, rgba(255, 255, 255, 0.3), transparent),
@@ -158,8 +158,8 @@ body::after {
 
 .back-button {
   position: fixed;
-  top: 2rem;
-  left: 2rem;
+  inset-block-start: 2rem;
+  inset-inline-start: 2rem;
   z-index: 100;
   display: inline-flex;
   align-items: center;
@@ -187,10 +187,10 @@ body::after {
 }
 
 .friends-container {
-  max-width: 1200px;
+  max-inline-size: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
-  padding-top: 5rem;
+  padding-block-start: 5rem;
   position: relative;
   z-index: 1;
 }
@@ -200,7 +200,7 @@ body::after {
   font-size: 3rem;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin-block-end: 0.5rem;
   background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f59e0b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -211,7 +211,7 @@ body::after {
   text-align: center;
   color: rgba(255, 255, 255, 0.6);
   font-size: 1.1rem;
-  margin-bottom: 3rem;
+  margin-block-end: 3rem;
   font-family: 'Inter', sans-serif;
 }
 
@@ -219,11 +219,11 @@ body::after {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 3rem;
+  margin-block-end: 3rem;
   justify-items: center;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  max-inline-size: 900px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
 }
 
 .friend-card {
@@ -300,12 +300,12 @@ body::after {
 .friends-grid .full-row {
   grid-column: 1 / -1;
   justify-self: center;
-  max-width: 280px;
+  max-inline-size: 280px;
 }
 
 .friend-avatar {
-  width: 80px;
-  height: 80px;
+  inline-size: 80px;
+  block-size: 80px;
   border-radius: 50%;
   overflow: hidden;
   border: 3px solid rgba(255, 255, 255, 0.2);
@@ -350,8 +350,8 @@ body::after {
 }
 
 .friend-avatar img {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   object-fit: cover;
 }
 
@@ -386,7 +386,7 @@ body::after {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 120px;
+  min-block-size: 120px;
   text-align: center;
   padding: 1.5rem;
 }
@@ -398,19 +398,19 @@ body::after {
 
 .add-icon {
   font-size: 3rem;
-  margin-bottom: 1rem;
+  margin-block-end: 1rem;
   opacity: 0.6;
 }
 
 .add-friend h3 {
   font-family: 'Urbanist', sans-serif;
   font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  margin-block-end: 0.5rem;
 }
 
 .add-friend p {
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 1rem;
+  margin-block-end: 1rem;
 }
 
 .friend-link {
@@ -454,11 +454,11 @@ body::after {
 }
 
 .friends-note + .friends-note {
-  margin-top: 1.5rem;
+  margin-block-start: 1.5rem;
 }
 
 .friends-note + .friends-grid {
-  margin-top: 1rem;
+  margin-block-start: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -471,6 +471,6 @@ body::after {
   }
   
   .friends-container {
-    padding-top: 4rem;
+    padding-block-start: 4rem;
   }
 }

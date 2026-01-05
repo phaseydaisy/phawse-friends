@@ -58,6 +58,31 @@
 
     
   </div>
+
+  <script>
+    async function updateDiscordAvatars() {
+      const images = document.querySelectorAll('img[data-discord-id]');
+      
+      for (const img of images) {
+        const userId = img.getAttribute('data-discord-id');
+        
+        try {
+          const response = await fetch(`https://discord-avatar-worker.kaidenlorse1.workers.dev?userId=${userId}`);
+          
+          if (response.ok) {
+            const data = await response.json();
+            if (data.avatarUrl) {
+              img.src = data.avatarUrl;
+            }
+          }
+        } catch (error) {
+          console.error(`Failed to update avatar for user ${userId}:`, error);
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', updateDiscordAvatars);
+  </script>
 </body>
 </html>
 

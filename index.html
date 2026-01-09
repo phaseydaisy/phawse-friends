@@ -22,7 +22,6 @@
       <div class="friend-card pink">
         <div class="friend-avatar">
           <img data-discord-id="1022426512923836426" src="" alt="Bella Senpai">
-          <div class="status-badge" data-status="offline"></div>
         </div>
         <div class="friend-info">
           <h3 class="friend-name">Bella Senpai 🥹</h3>
@@ -33,7 +32,6 @@
       <div class="friend-card crimson">
         <div class="friend-avatar">
           <img data-discord-id="506327916280283157" src="" alt="Ryan">
-          <div class="status-badge" data-status="offline"></div>
         </div>
         <div class="friend-info">
           <h3 class="friend-name">Ryan ❤️‍🩹</h3>
@@ -45,11 +43,20 @@
       <div class="friend-card pink">
         <div class="friend-avatar">
           <img data-discord-id="1067807613959548959" src="" alt="Asgort">
-          <div class="status-badge" data-status="offline"></div>
         </div>
         <div class="friend-info">
           <h3 class="friend-name">Asgort 🐼</h3>
           <p class="friend-note">My little sister.</p>
+        </div>
+      </div>
+
+      <div class="friend-card pink">
+        <div class="friend-avatar">
+          <img data-discord-id="1348212094801022976" src="" alt="Friend">
+        </div>
+        <div class="friend-info">
+          <h3 class="friend-name"></h3>
+          <p class="friend-note">THE BEST BEST PEAKEST FRIEND EVER</p>
         </div>
       </div>
 
@@ -68,7 +75,6 @@
       
       for (const img of images) {
         const userId = img.getAttribute('data-discord-id');
-        const statusBadge = img.parentElement.querySelector('.status-badge');
         
         try {
           const response = await fetch(`https://discord-avatar-worker.kaidenlorse1.workers.dev?userId=${userId}`);
@@ -77,10 +83,6 @@
             const data = await response.json();
             if (data.avatarUrl) {
               img.src = data.avatarUrl;
-            }
-            // Update status badge if available
-            if (data.status && statusBadge) {
-              statusBadge.setAttribute('data-status', data.status);
             }
           }
         } catch (error) {

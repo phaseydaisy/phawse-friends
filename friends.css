@@ -236,7 +236,7 @@ body::after {
   gap: 1rem;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
-  inline-size: 100%;
+  box-sizing: border-box;
   min-block-size: 120px;
 }
 

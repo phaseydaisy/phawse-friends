@@ -279,13 +279,12 @@ body::after {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.friend-card.black {
+  border-color: rgba(0, 0, 0, 0.65);
+}
+
 .friend-card.black:hover {
-  border-color: rgba(255, 255, 255, 0.75);
-  box-shadow:
-    0 10px 24px rgba(255, 255, 255, 0.22),
-    0 0 36px rgba(255, 255, 255, 0.18),
-    0 0 0 1px rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 0, 0, 0.9);
 }
 
 .friend-card.white .friend-avatar {
@@ -344,11 +343,10 @@ body::after {
 }
 
 .friend-card.black .friend-avatar {
-  box-shadow: 0 0 14px rgba(255, 255, 255, 0.28);
+  border-color: rgba(0, 0, 0, 0.7);
 }
 .friend-card.black:hover .friend-avatar {
-  border-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 22px rgba(255, 255, 255, 0.38);
+  border-color: rgba(0, 0, 0, 0.95);
 }
 
 .friend-avatar img {

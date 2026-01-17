@@ -46,7 +46,7 @@
         </div>
         <div class="friend-info">
           <h3 class="friend-name">Asgort 🐼</h3>
-          <p class="friend-note">My little sister.</p>
+          <p class="friend-note">shut up you weirdo</p>
         </div>
       </div>
 
@@ -76,7 +76,7 @@
         </div>
         <div class="friend-info">
           <h3 class="friend-name">mochi</h3>
-          <p class="friend-note">i hate you always</p>
+          <p class="friend-note">i will always hate you</p>
         </div>
       </div>
 
@@ -93,7 +93,7 @@
     async function updateDiscordAvatars() {
       const images = document.querySelectorAll('img[data-discord-id]');
       
-      for (const img of images) {
+      const fetchPromises = Array.from(images).map(async (img) => {
         const userId = img.getAttribute('data-discord-id');
         
         try {
@@ -108,7 +108,9 @@
         } catch (error) {
           console.error(`Failed to update avatar for user ${userId}:`, error);
         }
-      }
+      });
+      
+      await Promise.all(fetchPromises);
     }
 
     window.addEventListener('DOMContentLoaded', updateDiscordAvatars);
